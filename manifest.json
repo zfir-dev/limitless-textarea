@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Limitless Textarea",
+  "version": "1.0",
+  "description": "This extension removes maxlength limitations from textareas with the slds-textarea class, allowing for unlimited text input.",
+  "permissions": ["scripting"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["injected.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
