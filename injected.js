@@ -1,28 +1,34 @@
-console.log('ZAFIR injected script loaded');
+(function() {
+  console.log('Injected script loaded: Removing maxlength for all textarea elements');
 
-// Override Element.prototype.setAttribute
-const originalSetAttribute = Element.prototype.setAttribute;
-Element.prototype.setAttribute = function(name, value) {
-  if (name.toLowerCase() === 'maxlength' &&
-      this.classList && this.classList.contains('slds-textarea')) {
-    return; // Block setting maxlength on elements with slds-textarea
-  }
-  return originalSetAttribute.call(this, name, value);
-};
+  // Remove maxlength attribute from any existing textarea elements
+  document.querySelectorAll('textarea').forEach(el => {
+    el.removeAttribute('maxlength');
+  });
 
-// Override the maxLength property on HTMLTextAreaElement
-const originalDescriptor = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'maxLength');
-Object.defineProperty(HTMLTextAreaElement.prototype, 'maxLength', {
-  set: function(value) {
-    if (this.classList.contains('slds-textarea')) {
-      return; // Do nothing if it's an slds-textarea
+  // Override Element.prototype.setAttribute for textarea elements
+  const originalSetAttribute = Element.prototype.setAttribute;
+  Element.prototype.setAttribute = function(name, value) {
+    if (name.toLowerCase() === 'maxlength' && this.tagName.toLowerCase() === 'textarea') {
+      return; // Block setting maxlength on textarea elements
     }
-    originalDescriptor.set.call(this, value);
-  },
-  get: function() {
-    if (this.classList.contains('slds-textarea')) {
-      return -1; // Indicates no limit
+    return originalSetAttribute.call(this, name, value);
+  };
+
+  // Override the maxLength property on HTMLTextAreaElement
+  const originalDescriptor = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'maxLength');
+  Object.defineProperty(HTMLTextAreaElement.prototype, 'maxLength', {
+    set: function(value) {
+      if (this.tagName.toLowerCase() === 'textarea') {
+        return; // Block setting a value for textarea elements
+      }
+      originalDescriptor.set.call(this, value);
+    },
+    get: function() {
+      if (this.tagName.toLowerCase() === 'textarea') {
+        return -1; // Indicates no limit
+      }
+      return originalDescriptor.get.call(this);
     }
-    return originalDescriptor.get.call(this);
-  }
-});
+  });
+})();
