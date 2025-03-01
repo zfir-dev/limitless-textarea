@@ -1,27 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Limitless Textarea</title>
-  <link rel="stylesheet" href="./node_modules/uikit/dist/css/uikit.min.css" />
-</head>
-<body>
-  <div class="uk-container uk-margin-top">
-    <h2 class="uk-heading-bullet uk-text-center">Limitless Textarea</h2>
-    <form class="uk-form-stacked">
-      <div class="uk-margin">
-        <label for="maxLength" class="uk-form-label">Max Length</label>
-        <div class="uk-form-controls">
-          <input class="uk-input" id="maxLength" type="number" min="0" placeholder="0 for no limit">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Limitless Textarea</title>
+        <link
+            rel="stylesheet"
+            href="../node_modules/uikit/dist/css/uikit.min.css"
+        />
+    </head>
+    <body>
+        <div class="uk-container uk-margin">
+            <button
+                id="toggleButton"
+                class="uk-button uk-button-default"
+                type="button"
+                uk-toggle="target: .toggle-animation-queued; animation: uk-animation-fade; queued: true; duration: 300"
+            >
+                Toggle Extension
+            </button>
+            <p
+                id="stateOff"
+                class="toggle-animation-queued uk-card uk-card-default uk-card-body uk-margin-small"
+            >
+                Extension is Off
+            </p>
+            <p
+                id="stateOn"
+                class="toggle-animation-queued uk-card uk-card-primary uk-card-body uk-margin-small"
+                hidden
+            >
+                Extension is On
+            </p>
         </div>
-      </div>
-      <div class="uk-margin">
-        <button id="save" type="button" class="uk-button uk-button-primary uk-width-1-1">Save</button>
-      </div>
-    </form>
-  </div>
-  <script src="./node_modules/uikit/dist/js/uikit.min.js"></script>
-  <script src="./node_modules/uikit/dist/js/uikit-icons.min.js"></script>
-  <script src="popup.js"></script>
-</body>
+        <script src="../node_modules/uikit/dist/js/uikit.min.js"></script>
+        <script src="../node_modules/uikit/dist/js/uikit-icons.min.js"></script>
+        <script src="popup.js"></script>
+    </body>
 </html>
