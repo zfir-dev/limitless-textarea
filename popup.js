@@ -1,18 +1,25 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const maxLengthInput = document.getElementById('maxLength');
-  const saveButton = document.getElementById('save');
+document.addEventListener("DOMContentLoaded", function () {
+  const toggleButton = document.getElementById("toggleButton");
+  const stateOn = document.getElementById("stateOn");
+  const stateOff = document.getElementById("stateOff");
 
-  // Load the saved custom max length; default is 0 (no limit)
-  chrome.storage.sync.get({ customMaxLength: 0 }, (data) => {
-    maxLengthInput.value = data.customMaxLength;
+  chrome.storage.local.get(["extensionEnabled"], function (result) {
+    const enabled = result.extensionEnabled !== false;
+    if (enabled) {
+      stateOn.hidden = false;
+      stateOff.hidden = true;
+    } else {
+      stateOn.hidden = true;
+      stateOff.hidden = false;
+    }
   });
 
-  saveButton.addEventListener('click', () => {
-    const newMax = parseInt(maxLengthInput.value, 10) || 0;
-    chrome.storage.sync.set({ customMaxLength: newMax }, () => {
-      console.log('Custom max length saved as:', newMax);
-      // Optionally, show a notification using UIkit's notification component:
-      UIkit.notification({ message: 'Custom max length saved!', status: 'success', pos: 'top-center' });
-    });
+  toggleButton.addEventListener("click", function () {
+    setTimeout(function () {
+      const enabled = !stateOn.hidden;
+      chrome.storage.local.set({ extensionEnabled: enabled }, function () {
+        console.log("Extension state updated to:", enabled);
+      });
+    }, 350);
   });
 });
