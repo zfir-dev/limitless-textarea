@@ -8,28 +8,21 @@
             href="../node_modules/uikit/dist/css/uikit.min.css"
         />
     </head>
-    <body>
-        <div class="uk-container uk-margin">
+    <body class="uk-flex uk-flex-center uk-flex-middle uk-height-viewport">
+        <div class="uk-container uk-text-center uk-padding-small">
             <button
                 id="toggleButton"
                 class="uk-button uk-button-default"
                 type="button"
-                uk-toggle="target: .toggle-animation-queued; animation: uk-animation-fade; queued: true; duration: 300"
+                uk-toggle="target: #extensionState; cls: uk-card-primary"
             >
-                Toggle Extension
+                On/Off
             </button>
             <p
-                id="stateOff"
-                class="toggle-animation-queued uk-card uk-card-default uk-card-body uk-margin-small"
+                id="extensionState"
+                class="uk-card uk-card-default uk-card-body uk-margin-small"
             >
                 Extension is Off
-            </p>
-            <p
-                id="stateOn"
-                class="toggle-animation-queued uk-card uk-card-primary uk-card-body uk-margin-small"
-                hidden
-            >
-                Extension is On
             </p>
         </div>
         <script src="../node_modules/uikit/dist/js/uikit.min.js"></script>

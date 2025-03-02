@@ -1,25 +1,27 @@
 document.addEventListener("DOMContentLoaded", function () {
+  const extensionState = document.getElementById("extensionState");
   const toggleButton = document.getElementById("toggleButton");
-  const stateOn = document.getElementById("stateOn");
-  const stateOff = document.getElementById("stateOff");
 
   chrome.storage.local.get(["extensionEnabled"], function (result) {
     const enabled = result.extensionEnabled !== false;
     if (enabled) {
-      stateOn.hidden = false;
-      stateOff.hidden = true;
+      extensionState.classList.add("uk-card-primary");
+      extensionState.textContent = "Extension is On";
     } else {
-      stateOn.hidden = true;
-      stateOff.hidden = false;
+      extensionState.classList.remove("uk-card-primary");
+      extensionState.textContent = "Extension is Off";
     }
   });
 
   toggleButton.addEventListener("click", function () {
     setTimeout(function () {
-      const enabled = !stateOn.hidden;
+      const enabled = extensionState.classList.contains("uk-card-primary");
+      extensionState.textContent = enabled
+        ? "Extension is On"
+        : "Extension is Off";
       chrome.storage.local.set({ extensionEnabled: enabled }, function () {
         console.log("Extension state updated to:", enabled);
       });
-    }, 350);
+    }, 100);
   });
 });
